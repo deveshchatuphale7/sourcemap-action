@@ -26,9 +26,8 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - name: npm ci and npm run build  install sourcemap
+      - name: npm ci and npm run test
         run: |
           npm ci
+          npm run test
           npm run build
-          npm i source-map-explorer
-           
