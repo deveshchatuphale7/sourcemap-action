@@ -34,6 +34,7 @@ jobs:
       - name: install & generate sourcemap
         run: |
           npm i -g source-map-explorer
-          source-map-explorer dist/actionstest/*.js --html $GITHUB_SHA.html   
-
+          echo "${GITHUB_SHA}"
+          source-map-explorer dist/actionstest/*.js --html "${GITHUB_SHA}.html"   
+          echo $ls
 
