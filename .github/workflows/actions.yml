@@ -38,18 +38,16 @@ jobs:
           source-map-explorer dist/actionstest/*.js --json "${GITHUB_SHA}.json"
           source-map-explorer dist/actionstest/*.js --tsv "${GITHUB_SHA}.tsv"
 
-       - name: Send status email
-         uses: dawidd6/action-send-mail@v2
+      - name: Send status email
+        uses: dawidd6/action-send-mail@v2
         with:
         server_address: smtp.gmail.com
         server_port: 465
         username: ${{secrets.MAIL_USERNAME}}
         password: ${{secrets.MAIL_PASSWORD}}
         subject: Sourcemap & build report
-    # Literal body:
         body: Build results & sourcemap of <b>${{github.repository}}</b> for commit id <b>${{GITHUB_SHA}}</b>
         to: devesh7@protonmail.com
         from: ${{secrets.MAIL_USERNAME}}
         content_type: text/html
-    # Optional attachments:
         attachments: ${{GITHUB_SHA}}.html,${{GITHUB_SHA}}.json,${{GITHUB_SHA}}.tsv,${{GITHUB_SHA}}-status.txt   
