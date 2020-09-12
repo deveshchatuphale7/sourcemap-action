@@ -13,7 +13,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
-
       - name: Cache node modules
         uses: actions/cache@v1
         with:
@@ -26,8 +25,16 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
+
       - name: npm ci and npm run test
         run: |
           npm ci
           npm run test
           npm run build
+
+      - name: install & gnerate sourcemap
+        run: |
+          npm i source-map-explorer
+          source-map-explorer dist/actionstest/*.js --html $GITHUB_SHA.html   
+
+
