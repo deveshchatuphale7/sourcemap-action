@@ -29,10 +29,9 @@ jobs:
       - name: npm ci and npm run test
         run: |
           npm ci
-          npm run test
           npm run build
 
-      - name: install & gnerate sourcemap
+      - name: install & generate sourcemap
         run: |
           npm i source-map-explorer
           source-map-explorer dist/actionstest/*.js --html $GITHUB_SHA.html   
