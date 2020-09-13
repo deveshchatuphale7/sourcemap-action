@@ -43,11 +43,11 @@ jobs:
         with:
           server_address: smtp.gmail.com
           server_port: 465
-          username: ${{secrets.MAIL_USERNAME}}
-          password: ${{secrets.MAIL_PASSWORD}}
+          username: ${{secrets.EMAIL}}
+          password: ${{secrets.PWD}}
           subject: Sourcemap & build report
           body: Build results & sourcemap of <b>${{github.repository}}</b> for commit id <b>${{github.sha}}</b>
           to: devesh7@protonmail.com
-          from: ${{secrets.MAIL_USERNAME}}
+          from: ${{secrets.EMAIL}}
           content_type: text/html
           attachments: ${{github.sha}}.html,${{github.sha}}.json,${{github.sha}}.tsv,${{github.sha}}-status.txt   
