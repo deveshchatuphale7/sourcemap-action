@@ -38,8 +38,8 @@ jobs:
           source-map-explorer dist/actionstest/*.js --json "${GITHUB_SHA}.json"
           source-map-explorer dist/actionstest/*.js --tsv "${GITHUB_SHA}.tsv"
 
-      - name: Send report Email
-        uses: singhkshitij/announcerr@v2
+      - name: Send report email
+        uses: dawidd6/action-send-mail@v2
         with:
           server_address: smtp.gmail.com
           server_port: 465
