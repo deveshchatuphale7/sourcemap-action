@@ -50,4 +50,18 @@ jobs:
           to: devesh7@protonmail.com
           from: ${{secrets.EMAIL}}
           content_type: text/html
-          attachments: ${{github.sha}}.html,${{github.sha}}.json,${{github.sha}}.tsv,${{github.sha}}-status.txt   
+          attachments: ${{github.sha}}.html,${{github.sha}}.json,${{github.sha}}.tsv,${{github.sha}}-status.txt
+          
+      - name: Send email
+        uses: singhkshitij/announcerr@v2
+        with:
+          smtp-server: ${{ secrets.SMTP_SERVER }}
+          smtp-server-port: ${{ secrets.SMTP_SERVER_PORT }}
+          auth-user: ${{ secrets.AUTH_USER }}
+          auth-password: ${{secrets.EMAIL_PASSWORD }}
+          subject: correciones a ${{github.repository}}
+          body: ${{github.context.payload}}
+          from: ${{ secrets.EMAIL_FROM }}
+          to: ${{ secrets.EMAIL_RECIVER }}
+          is-tls: false
+          commit-message: true
