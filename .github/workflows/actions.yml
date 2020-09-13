@@ -34,9 +34,9 @@ jobs:
       - name: install sourcemap & generate sourcemaps output
         run: |
           npm i -g source-map-explorer
-          source-map-explorer dist/actionstest/*.js --html "${GITHUB_SHA}.html"   
-          source-map-explorer dist/actionstest/*.js --json "${GITHUB_SHA}.json"
-          source-map-explorer dist/actionstest/*.js --tsv "${GITHUB_SHA}.tsv"
+          source-map-explorer dist/*.js --html "${GITHUB_SHA}.html"   
+          source-map-explorer dist/*.js --json "${GITHUB_SHA}.json"
+          source-map-explorer dist/*.js --tsv "${GITHUB_SHA}.tsv"
 
       - name: Send report email
         uses: dawidd6/action-send-mail@v2
@@ -46,8 +46,8 @@ jobs:
           username: ${{secrets.EMAIL}}
           password: ${{secrets.PWD}}
           subject: Sourcemap & build report
-          body: Build results & sourcemap of <b>${{github.repository}}</b> for commit id <b>${{github.sha}}</b>
-          to: devesh7@protonmail.com
+          body: <h1> Build results & sourcemap of <b>${{github.repository}}</b> for commit id <b>${{github.sha}}</b></h1>
+          to: ${{secrets.RECIPIENTS}}
           from: ${{secrets.EMAIL}}
           content_type: text/html
           attachments: ${{github.sha}}.html,${{github.sha}}.json,${{github.sha}}.tsv,${{github.sha}}-status.txt
