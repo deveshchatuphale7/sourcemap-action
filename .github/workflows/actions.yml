@@ -38,7 +38,7 @@ jobs:
           source-map-explorer dist/actionstest/*.js --json "${GITHUB_SHA}.json"
           source-map-explorer dist/actionstest/*.js --tsv "${GITHUB_SHA}.tsv"
 
-      - name: Send report email
+      - name: Send report Email
         uses: singhkshitij/announcerr@v2
         with:
           server_address: smtp.gmail.com
