@@ -1,4 +1,4 @@
-name: Generate & email source maps for Angular app  
+name: Generate & email source maps for Angular app        
 on:
   push:
     branches:
@@ -13,8 +13,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
-      - name: Cache node modules
-      # Caching node modules to speedup workflows
+      - name: Cache node modules       # Caching node modules to speedup workflows
         uses: actions/cache@v1
         with:
           path: ~/.npm
@@ -26,32 +25,27 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-         
-      - name: npm ci
-        # Clean install of dependencies from package.json & generating build of angular app, storing output in text file
+
+      - name: npm ci # Clean install of dependencies from package.json & generating build of angular app, storing output in text file
         run: |
           npm ci
           npm run build > "${GITHUB_SHA}-status.txt"
-
-      # Installing source-map-explorer & generating output of source map in html,json & tsv with commit SHA as filename
-      - name: install source map & generate source maps output
+      - name: install source map & generate source maps output  # Installing source-map-explorer & generating output of source map in html,json & tsv with commit SHA as filename
         run: |
           npm i -g source-map-explorer
           source-map-explorer dist/*.js --html "${GITHUB_SHA}.html"   
           source-map-explorer dist/*.js --json "${GITHUB_SHA}.json"
           source-map-explorer dist/*.js --tsv "${GITHUB_SHA}.tsv"
-
-      # Using action to send email of Build result & source map files to team members, collaborators & contributors      - name: Send report email
+      - name: Send report email # Using action to send email of Build result & source map files to team members, collaborators & contributors
         uses: dawidd6/action-send-mail@v2
         with:
           server_address: smtp.gmail.com
           server_port: 465
           username: ${{secrets.EMAIL}}
           password: ${{secrets.PWD}}
-          subject: Source map & build status
-          body: <h1> Hey there, Build status & source map of <b>${{github.repository}}</b> for commit id <b>${{github.sha}}</b> is here,</h1>
+          subject: Source map & build report
+          body: <h1> Build results & source map of <b>${{github.repository}}</b> for commit id <b>${{github.sha}}</b></h1>
           to: ${{secrets.RECIPIENTS}}
           from: ${{secrets.EMAIL}}
           content_type: text/html
           attachments: ${{github.sha}}.html,${{github.sha}}.json,${{github.sha}}.tsv,${{github.sha}}-status.txt
-          
